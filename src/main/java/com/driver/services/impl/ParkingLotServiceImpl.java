@@ -90,7 +90,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
             parkingLotRepository1.save(curParkingLot);
 
             curSpot.setPricePerHour(pricePerHour);
-            /////////////////////////////////////////////
+
             Optional<ParkingLot> optionalParkingLot = parkingLotRepository1.findById(parkingLotId);
             if(optionalParkingLot.isPresent()) {
                 ParkingLot curParkingLot1 = optionalParkingLot.get();

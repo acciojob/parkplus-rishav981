@@ -32,9 +32,6 @@ public class ParkingLotController {
         //create a new spot in the parkingLot with given id
         //the spot type should be the next biggest type in case the number of wheels are not 2 or 4, for 4+ wheels, it is others
         Spot newSpot = parkingLotService.addSpot(parkingLotId,numberOfWheels,pricePerHour);
-        if(newSpot==null){
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-        }
         return new ResponseEntity<>(newSpot, HttpStatus.CREATED);
     }
 
@@ -49,9 +46,6 @@ public class ParkingLotController {
     public ResponseEntity<Spot> updateSpot(@PathVariable int parkingLotId, @PathVariable int spotId, @RequestParam int pricePerHour) {
         //update the details of a spot
         Spot updatedSpot = parkingLotService.updateSpot(parkingLotId,spotId,pricePerHour);
-        if(updatedSpot==null){
-            return new ResponseEntity<>(null,HttpStatus.BAD_REQUEST);
-        }
         return new ResponseEntity<>(updatedSpot, HttpStatus.OK);
     }
 
