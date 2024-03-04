@@ -44,32 +44,35 @@ public class ParkingLotServiceImpl implements ParkingLotService {
         else{
             newSpot.setSpotType(OTHERS);
         }
-        System.out.println(newSpot.getSpotType());
-        System.out.println(numberOfWheels);
-        ParkingLot pL = (parkingLotRepository1.findById(parkingLotId)).get();
+        Optional<ParkingLot> optionParkingLot = parkingLotRepository1.findById(parkingLotId);
+        if(!optionParkingLot.isPresent()){
+            return null;
+        }
+        ParkingLot pL = optionParkingLot.get();
 
         newSpot.setParkingLot(pL);
 
         pL.getSpotList().add(newSpot);
-        parkingLotRepository1.save(pL);
-
-        return newSpot;
+       ParkingLot p = parkingLotRepository1.save(pL);
+       return newSpot;
     }
 
     @Override
     public void deleteSpot(int spotId) {
-         Spot curSpot = spotRepository1.findById(spotId).get();
+        Optional<Spot> optionalSpot = spotRepository1.findById(spotId);
+        if(optionalSpot.isPresent()) {
+            Spot curSpot = optionalSpot.get();
 
-         ParkingLot curParkingLot = parkingLotRepository1.findById(curSpot.getParkingLot().getId()).get();
+            ParkingLot curParkingLot = parkingLotRepository1.findById(curSpot.getParkingLot().getId()).get();
+            List<Spot> allSpot = curParkingLot.getSpotList();
 
-         List<Spot> allSpot = curParkingLot.getSpotList();
+            allSpot.remove(curSpot);
 
-         allSpot.remove(curSpot);
+            curParkingLot.setSpotList(allSpot);
 
-         curParkingLot.setSpotList(allSpot);
-
-         parkingLotRepository1.save(curParkingLot);
-         spotRepository1.deleteById(spotId);
+            parkingLotRepository1.save(curParkingLot);
+            spotRepository1.deleteById(spotId);
+        }
     }
 
     @Override
