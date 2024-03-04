@@ -53,7 +53,7 @@ public class ParkingLotServiceImpl implements ParkingLotService {
 
         pL.getSpotList().add(newSpot);
        ParkingLot p = parkingLotRepository1.save(pL);
-       return newSpot;
+       return p.getSpotList().get(p.getSpotList().size()-1);
     }
 
     @Override
@@ -100,9 +100,9 @@ public class ParkingLotServiceImpl implements ParkingLotService {
                 allSpot1.add(curSpot);
 
                 curParkingLot1.setSpotList(allSpot1);
-
-                parkingLotRepository1.save(curParkingLot1);
-                return curSpot;
+                curSpot.setOccupied(false);
+                ParkingLot p = parkingLotRepository1.save(curParkingLot1);
+                return p.getSpotList().get(p.getSpotList().size()-1);
             }
             else {
                 return null;

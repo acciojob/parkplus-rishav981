@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.Integer.MAX_VALUE;
+
 @Service
 public class ReservationServiceImpl implements ReservationService {
     @Autowired
@@ -24,11 +26,11 @@ public class ReservationServiceImpl implements ReservationService {
     ParkingLotRepository parkingLotRepository3;
     @Override
     public Reservation reserveSpot(Integer userId, Integer parkingLotId, Integer timeInHours, Integer numberOfWheels) throws Exception {
-        Optional<User> Optionaluser = userRepository3.findById(userId);
-        if(!Optionaluser.isPresent()){
+        Optional<User> optionaluser = userRepository3.findById(userId);
+        if(!optionaluser.isPresent()){
             throw new Exception("Cannot make reservation");
         }
-       User curuser = Optionaluser.get();
+       User curuser = optionaluser.get();
         Optional<ParkingLot> OptionalParkinglot = parkingLotRepository3.findById(parkingLotId);
         if(!OptionalParkinglot.isPresent()){
             throw new Exception("Cannot make reservation");
@@ -37,7 +39,7 @@ public class ReservationServiceImpl implements ReservationService {
 
        List<Spot> spots = curparkinglot.getSpotList();
        Spot goodspots = null;
-       Integer price=1000000000;
+       Integer price=MAX_VALUE;
        if(numberOfWheels>4) {
            for (Spot s : spots) {
                if(s.getSpotType().equals(SpotType.OTHERS)){
