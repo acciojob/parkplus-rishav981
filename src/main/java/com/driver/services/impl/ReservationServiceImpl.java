@@ -41,7 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
        if(numberOfWheels>4) {
            for (Spot s : spots) {
                if(s.getSpotType().equals(SpotType.OTHERS)){
-                   if(s.getPricePerHour()<price){
+                   if(s.getPricePerHour()<price && s.getOccupied().equals(false)){
                        goodspots = s;
                        price = s.getPricePerHour();
                    }
@@ -51,7 +51,7 @@ public class ReservationServiceImpl implements ReservationService {
        else if(numberOfWheels>2){
            for (Spot s : spots) {
                if(s.getSpotType().equals(SpotType.OTHERS) || s.getSpotType().equals(SpotType.FOUR_WHEELER)){
-                   if(s.getPricePerHour()<price){
+                   if(s.getPricePerHour()<price && s.getOccupied().equals(false)){
                        goodspots = s;
                        price = s.getPricePerHour();
                    }
@@ -60,7 +60,7 @@ public class ReservationServiceImpl implements ReservationService {
        }
        else{
            for (Spot s : spots) {
-                   if(s.getPricePerHour()<price) {
+                   if(s.getPricePerHour()<price && s.getOccupied().equals(false)) {
                        goodspots = s;
                        price = s.getPricePerHour();
                    }
@@ -75,7 +75,7 @@ public class ReservationServiceImpl implements ReservationService {
        reservation.setNumberOfHours(timeInHours);
        reservation.setSpot(goodspots);
        reservation.setUser(curuser);
-
+       reservation.getSpot().setOccupied(true);
        reservationRepository3.save(reservation);
        return reservation;
     }
