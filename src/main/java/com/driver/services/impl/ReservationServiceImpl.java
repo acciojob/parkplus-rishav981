@@ -26,12 +26,12 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation reserveSpot(Integer userId, Integer parkingLotId, Integer timeInHours, Integer numberOfWheels) throws Exception {
         Optional<User> Optionaluser = userRepository3.findById(userId);
         if(!Optionaluser.isPresent()){
-            throw new Exception("User is not found");
+            throw new Exception("Cannot make reservation");
         }
        User curuser = Optionaluser.get();
         Optional<ParkingLot> OptionalParkinglot = parkingLotRepository3.findById(parkingLotId);
         if(!OptionalParkinglot.isPresent()){
-            throw new Exception("parkingLot is not found");
+            throw new Exception("Cannot make reservation");
         }
        ParkingLot curparkinglot = OptionalParkinglot.get();
 
@@ -68,7 +68,7 @@ public class ReservationServiceImpl implements ReservationService {
        }
 
        if(goodspots==null){
-           throw new Exception("Spot is not found");
+           throw new Exception("Cannot make reservation");
        }
 
        Reservation reservation = new Reservation();
