@@ -3,6 +3,7 @@ package com.driver.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -16,7 +17,7 @@ public class ParkingLot {
 
     @OneToMany(mappedBy = "parkingLot",cascade = CascadeType.ALL)
     @JsonIgnore
-    List<Spot> spotList;
+    List<Spot> spotList = new ArrayList<>();
 
     public int getId() {
         return id;
